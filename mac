@@ -74,23 +74,6 @@ if [[ "$ARCH" == "arm64" ]]; then
     exit 0
 fi
 
-# Check for Xcode Devtools and wait for them to be installed before continuing
-xcode-select -p 2>/dev/null
-return_code=$?
-
-while [ $return_code -eq 2 ]
-do
-  fancy_echo "\033[1;31mApple's Xcode Developer Tools are not installed!\033[0m"
-  fancy_echo "\033[1;31mPlease install them through the dialog box before continuing with running this installation script.\033[0m"
-  fancy_echo "Many of the tools used in this script will not work without the Xcode developer tools"
-  fancy_echo "Opening 'Install Command Line Developer Tools'"
-  xcode-select --install 1>/dev/null
-  fancy_echo "Press enter to try again once Xcode developer tools are installed"
-  read input
-  xcode-select -p
-  return_code=$?
-done
-
 if [ ! -d "$HOME/.bin/" ]; then
   mkdir "$HOME/.bin"
 fi
@@ -152,26 +135,6 @@ brew "tree"
 
 # Programming languages
 brew "node"
-brew "rbenv"
-brew "ruby-build"
-brew "python"
-
-# Fix for forcing java8 install
-tap "adoptopenjdk/openjdk"
-cask "adoptopenjdk/openjdk/adoptopenjdk8"
-
-# Databases
-brew "postgres", restart_service: true
-tap "mongodb/brew"
-brew  "mongodb-community", restart_service: true
-cask "mongodb-compass"
-
-# Fonts
-cask "font-open-dyslexic"
-
-# Docker
-cask "docker"
-EOF
 
 fancy_echo "Installing Oh-My-Zsh ..."
 curl -L \
@@ -180,47 +143,11 @@ curl -L \
 
 fancy_echo "Installing GUI apps"
 
-# Web browsing
-install_gui_app "google chrome" "google-chrome"
-
-# Chat
-install_gui_app "slack" "slack"
-
-# Insomnia
-install_gui_app "insomnia" "insomnia"
-
-# Postico
-install_gui_app "postico" "postico"
-
 # VSCode
 install_gui_app "visual studio code" "visual-studio-code"
 cat << EOF >> ~/.zshrc
 # Add Visual Studio Code (code)
 export PATH="\$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-EOF
-code --install-extension ms-vsliveshare.vsliveshare
-
-fancy_echo "Configuring Ruby ..."
-find_latest_ruby() {
-  rbenv install -l | grep -v - | tail -1 | sed -e 's/^ *//'
-}
-
-ruby_version="2.6.5"
-# shellcheck disable=SC2016
-append_to_zshrc 'eval "$(rbenv init - --no-rehash)"' 1
-eval "$(rbenv init -)"
-
-if ! rbenv versions | grep -Fq "$ruby_version"; then
-  rbenv install -s "$ruby_version"
-fi
-
-rbenv global "$ruby_version"
-rbenv shell "$ruby_version"
-gem update --system
-gem_install_or_update 'bundler'
-number_of_cores=$(sysctl -n hw.ncpu)
-bundle config --global jobs $((number_of_cores - 1))
-rbenv rehash
 
 fancy_echo "Skipping rdoc generation when we install a gem"
 echo 'gem: --no-rdoc --no-ri' >> ~/.gemrc
@@ -235,16 +162,6 @@ fancy_echo "Globally ignoring .DS_Store files"
 echo .DS_Store >> ~/.gitignore_global
 git config --global core.excludesfile ~/.gitignore_global
 git config --global init.defaultBranch main
-
-fancy_echo "Creating Postgres database under current user name"
-if ! psql -lqt | cut -d \| -f 1 | grep -qw "$(whoami)" >/dev/null; then
-  createdb "$(whoami)"
-fi
-createuser "postgres"
-
-# IntelliJ
-fancy_echo "Installing IntelliJ"
-install_gui_app "intellij idea ce" "intellij-idea-ce"
 
 fancy_echo "Checking for unsuccessful installs"
 
