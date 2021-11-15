@@ -27,7 +27,7 @@ To open Terminal:
 Copy the below command into Terminal and hit enter:
 
 ```sh
-curl --remote-name https://raw.githubusercontent.com/CrugBarat/ANDigital-onboarding-mac-setup/develop/mac
+curl --remote-name https://raw.githubusercontent.com/alexgyllos/mac-setup/blob/develop/mac
 ```
 
 Then copy the below command into Terminal and hit enter:
