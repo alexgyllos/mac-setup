@@ -1,10 +1,10 @@
-# ANDigital Mac Setup
+# Mac Setup
 
 A script to set up a macOS laptop for development.
 
 It can be run multiple times on the same machine safely. It installs, upgrades, or skips packages based on what is already installed on the machine.
 
-Forked from [here](https://github.com/codeclan/laptop)
+Forked from [here](https://github.com/CrugBarat/ANDigital-onboarding-mac-setup)
 
 ## Requirements
 
@@ -57,10 +57,6 @@ NB: If you have any issues with running these scripts, please reach out to your 
 
 ## What it sets up
 
-### macOS tools:
-
-- [Apple's Command Line Developer Tools](https://developer.apple.com/) to enable developer functionality on our macOS system.
-
 ### Command line tools:
 
 - [Homebrew](http://brew.sh/) for managing operating system libraries.
@@ -71,27 +67,12 @@ NB: If you have any issues with running these scripts, please reach out to your 
 
 ### Programming languages and configuration:
 
-- [Ruby](https://www.ruby-lang.org/en/)
-- [Rbenv](https://github.com/sstephenson/rbenv) for managing versions of Ruby
-- [Bundler](http://bundler.io/) for managing Ruby libraries
-- [Ruby Build](https://github.com/sstephenson/rbenv) for installing Rubies
-- [Java](https://java.com/en/)
 - [Node.js](http://nodejs.org/) for JavaScript back-end development, and
 - [NPM](https://www.npmjs.org/) for installing JavaScript packages
 
-### Databases:
-
-- [PostgreSQL](http://www.postgresql.org/) for storing relational data
-- [MongoDB](https://www.mongodb.com/) for storing non-relational data
-
 ### GUI Apps:
 
-- [Google Chrome](https://www.google.com/chrome/) for web browsing and development
 - [VSCode](https://code.visualstudio.com/) IDE
-- [Slack](https://slack.com) for team chat
-- [IntelliJ IDEA CE](https://www.jetbrains.com/idea/) for Java development
-- [MongoDB Compass](https://www.mongodb.com/products/compass) for accessing MongoDB databases from a GUI
-- [Docker](https://www.docker.com/)
 
 ### Fonts:
 
